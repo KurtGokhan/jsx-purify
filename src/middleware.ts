@@ -1,5 +1,5 @@
 import { Middleware } from 'jsx-middlewares/react';
-import { JsxPurifyInput, jsxPurify } from './purify';
+import { JsxPurifyInput, jsxPurify } from './purify.ts';
 
 /**
  * Creates a middleware for `jsxPurify` that can be used with `jsx-middlewares`.

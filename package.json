@@ -51,7 +51,7 @@
     "lint": "biome lint",
     "format": "biome format",
     "check": "biome check",
-    "rewrite-mjs": "find dist/esm -type f -name \"*.js\" -exec sh -c 'mv \"$0\" \"${0%.js}.mjs\"' {} \\;",
+    "rewrite-mjs": "node scripts/rewrite-mjs",
     "prepare": "husky && npm run build && npm run rewrite-mjs"
   },
   "devDependencies": {
@@ -68,7 +68,7 @@
     "vitest": "^2.1.8"
   },
   "dependencies": {
-    "jsx-middlewares": "^2.0.5"
+    "jsx-middlewares": "^2.0.6"
   },
   "peerDependencies": {
     "@types/react": ">=18",

@@ -1,4 +1,4 @@
-import { JsxPurifyOptions } from '../purify';
+import { JsxPurifyOptions } from '../purify.ts';
 
 export const jsxPurifyOptions: JsxPurifyOptions = {
   fallback: undefined,

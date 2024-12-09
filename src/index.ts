@@ -1,1 +1,2 @@
-export { jsxPurifyMiddleware } from './middleware.ts';
+export * from './purify.ts';
+export { createJsxPurifyMiddleware } from './middleware.ts';

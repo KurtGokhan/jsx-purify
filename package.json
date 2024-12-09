@@ -1,6 +1,6 @@
 {
   "name": "jsx-purify",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Transform untrusted JSX to a safe JSX",
   "homepage": "https://gkurt.com/jsx-purify/",
   "repository": {

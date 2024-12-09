@@ -1,4 +1,4 @@
-/** @jsxImportSource jsx-purify/react */
+/** @jsxImportSource ../src/react */
 
 describe('jsx-purify', () => {
   it('should render JSX without errors', () => {

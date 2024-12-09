@@ -1,7 +1,6 @@
 import { JsxPurifyOptions } from '../purify.ts';
 
 export const jsxPurifyOptions: JsxPurifyOptions = {
-  fallback: undefined,
   allowTypes: (allowed, type, props, key) => {
     if (typeof type === 'function') return false;
 

@@ -7,6 +7,8 @@ import { JsxPurifyInput, jsxPurify } from './purify.ts';
 export function createJsxPurifyMiddleware(input?: JsxPurifyInput): Middleware {
   return function jsxPurifyMiddleware(next, type, props, key) {
     const purified = jsxPurify({ type, props, key, ...input });
+    if (!purified) return next(next.context.Fragment, {}, key);
+
     return next(purified.type, purified.props, purified.key);
   };
 }

@@ -1,17 +1,16 @@
-type AllowOption<TArgs extends [any, ...any[]] = [any]> =
+type AllowOption<TArgs extends [unknown, ...unknown[]] = [unknown]> =
   | TArgs[0][]
   | ((defaultAllowed: boolean, ...args: TArgs) => boolean);
 
 export type JsxPurifyOptions = {
-  allowTypes?: AllowOption<[type: any, props: any, key: any]>;
-  allowProps?: AllowOption<[key: PropertyKey, value: any, type: any]>;
-  fallback?: any | ((input: JsxPurifyInput) => any);
+  allowTypes?: AllowOption<[type: unknown, props: unknown, key: unknown]>;
+  allowProps?: AllowOption<[key: PropertyKey, value: unknown, type: unknown]>;
 };
 
 export type JsxPurifyOutput = {
-  type: any;
-  props: any;
-  key?: any;
+  type: unknown;
+  props: unknown;
+  key?: unknown;
 };
 
 export type JsxPurifyInput = {
@@ -21,7 +20,7 @@ export type JsxPurifyInput = {
 /**
  * Purifies a JSX element to make it safe for rendering.
  */
-export function jsxPurify(input: JsxPurifyInput & JsxPurifyOutput): JsxPurifyOutput {
+export function jsxPurify(input: JsxPurifyInput & JsxPurifyOutput): JsxPurifyOutput | null {
   const { type, props, key, options } = input;
 
   if (options?.allowTypes) {
@@ -30,24 +29,25 @@ export function jsxPurify(input: JsxPurifyInput & JsxPurifyOutput): JsxPurifyOut
     if (typeof options.allowTypes === 'function') allowed = options.allowTypes(true, type, props, key);
     else allowed = options.allowTypes.includes(type);
 
-    if (!allowed) {
-      if (typeof options.fallback === 'function') return options.fallback(input);
-      return options.fallback;
-    }
+    if (!allowed) return null;
   }
 
-  const newProps = { ...props };
-
   if (options?.allowProps) {
+    if (typeof props !== 'object') return null;
+    const newProps: Record<string, unknown> = { ...props };
+
     for (const prop in props) {
       let allowed = false;
 
-      if (typeof options.allowProps === 'function') allowed = options.allowProps(true, prop, props[prop], type);
+      if (typeof options.allowProps === 'function')
+        allowed = options.allowProps(true, prop, Reflect.get(props, prop), type);
       else allowed = options.allowProps.includes(prop);
 
       if (!allowed) delete newProps[prop];
     }
+
+    return { type, props: newProps, key };
   }
 
-  return { type, props: newProps, key };
+  return null;
 }

@@ -1,0 +1,95 @@
+{
+  "name": "jsx-purify",
+  "version": "0.0.1",
+  "description": "Transform untrusted JSX to a safe JSX",
+  "homepage": "https://gkurt.com/jsx-purify/",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/KurtGokhan/jsx-purify.git"
+  },
+  "keywords": ["jsx", "react", "purify", "xss", "security", "secure", "sanitizer", "sanitize"],
+  "license": "MIT",
+  "author": {
+    "name": "Gokhan Kurt",
+    "email": "krtgkn@gmail.com",
+    "url": "https://github.com/KurtGokhan"
+  },
+  "files": ["README.md", "dist", "!dist/*.tsbuildinfo", "react"],
+  "types": "./dist/cjs/index.d.ts",
+  "module": "./dist/esm/index.js",
+  "main": "./dist/cjs/index.js",
+  "exports": {
+    ".": {
+      "jsx-purify@dev": "./src/index.ts",
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/esm/index.js"
+    },
+    "./react": {
+      "jsx-purify@dev": "./src/react/index.ts",
+      "types": "./dist/esm/react/index.d.ts",
+      "import": "./dist/esm/react/index.js",
+      "require": "./dist/cjs/react/index.js",
+      "default": "./dist/esm/react/index.js"
+    },
+    "./react/*": {
+      "jsx-purify@dev": "./src/react/*.ts",
+      "types": "./dist/esm/react/*.d.ts",
+      "import": "./dist/esm/react/*.js",
+      "require": "./dist/cjs/react/*.js",
+      "default": "./dist/esm/react/*.js"
+    }
+  },
+  "scripts": {
+    "tsc": "tsc -b tsconfig.lib.json tsconfig.cjs.json",
+    "start": "npm run tsc -- --watch",
+    "build": "npm run clean && npm run tsc",
+    "clean": "rimraf dist && rimraf tsconfig.lib.tsbuildinfo",
+    "test": "vitest",
+    "lint": "biome lint",
+    "format": "biome format",
+    "check": "biome check",
+    "rewrite-mjs": "find dist/esm -type f -name \"*.js\" -exec sh -c 'mv \"$0\" \"${0%.js}.mjs\"' {} \\;",
+    "prepare": "husky && npm run build && npm run rewrite-mjs"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@changesets/cli": "^2.27.10",
+    "@types/react": "19.0.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "rimraf": "^6.0.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.3",
+    "vitest": "^2.1.8"
+  },
+  "dependencies": {
+    "jsx-middlewares": "^2.0.5"
+  },
+  "peerDependencies": {
+    "@types/react": ">=18",
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "overrides": {
+    "vite": "$vite"
+  },
+  "volta": {
+    "node": "22.12.0",
+    "npm": "10.9.1"
+  },
+  "lint-staged": {
+    "*": ["biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"]
+  },
+  "workspaces": [".", "packages/*", "examples/*", "website"]
+}

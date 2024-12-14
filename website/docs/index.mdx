@@ -13,7 +13,7 @@ npm install jsx-purify
 
 ## Setup your JSX transpiler
 
-To use JSX Middlewares, you need to setup your JSX transpiler to use the `jsx-purify/react` package as the JSX factory. This is done differently depending on the transpiler you are using.
+To use JSX Purify, you need to setup your JSX transpiler to use the `jsx-purify/react` package as the JSX factory. This is done differently depending on the transpiler you are using.
 
 <Tabs>
 
@@ -51,11 +51,11 @@ To use JSX Middlewares, you need to setup your JSX transpiler to use the `jsx-pu
 If you are using Typescript, you can use the Typescript configuration too.
 
 ```js title="vite.config.js"
-import { defineConfig } from 'vite';
+import { defineConfig } from "vite";
 
 export default defineConfig({
   esbuild: {
-    jsxImportSource: 'jsx-purify/react',
+    jsxImportSource: "jsx-purify/react",
   },
 });
 ```
@@ -65,13 +65,13 @@ export default defineConfig({
 <TabItem value="vite-swc" label="Vite SWC">
 
 ```js title="vite.config.js"
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
 
 export default defineConfig({
   plugins: [
     react({
-      jsxImportSource: 'jsx-purify/react',
+      jsxImportSource: "jsx-purify/react",
     }),
   ],
 });
@@ -89,13 +89,13 @@ module.exports = {
         test: /\.jsx?$/,
         use: [
           {
-            loader: 'babel-loader',
+            loader: "babel-loader",
             options: {
               plugins: [
                 [
-                  '@babel/plugin-transform-react-jsx',
+                  "@babel/plugin-transform-react-jsx",
                   {
-                    importSource: 'jsx-purify/react',
+                    importSource: "jsx-purify/react",
                   },
                 ],
               ],
@@ -128,43 +128,19 @@ export function App() {
 
 ## Usage
 
-Firstly, you need to add middlewares at the start of your application.
+After you setup the transpiler, all JSX created with jsx-purify Runtime will be safe to execute in a client browser.
 
-```jsx title="main.jsx"
-import { addMiddlewares } from 'jsx-purify/react';
+```jsx title="untrusted.jsx"
+/** @jsxImportSource jsx-purify/react */
 
-addMiddlewares(function emojiMiddleware(next, type, props, key) {
-  // Modify the props to add an emoji to the text
-  if (typeof type === 'string' && typeof props.children === 'string') {
-    props = {
-      ...props,
-      children: props.children + ' 🎉',
-    };
-  }
-
-  // Call the next middleware with the new props
-  // If there is no next middleware, it will call the original JSX renderer
-  return next(type, props, key);
-});
-```
-
-Then, you can write your JSX as usual.
-
-```jsx title="my-file.jsx"
 export function App() {
   return (
     <div>
+      <script>alert('Bad actor')</script>
       <h1>Hello World</h1>
+      <img onerror={() => alert("Bad actor")} src="nonsense" />
       <p>This is a paragraph</p>
     </div>
   );
 }
 ```
-
-The output will be like this:
-
-<IndexExample />
-
-## What's next?
-
-For more examples of what you can do with JSX Middlewares, check out the [examples](/category/examples) section.

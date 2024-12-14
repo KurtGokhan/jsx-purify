@@ -52,7 +52,7 @@
     "check": "biome check",
     "rewrite-mjs": "node scripts/rewrite-mjs",
     "prepare": "husky && npm run build && npm run rewrite-mjs",
-    "check:pack": "npx --yes @arethetypeswrong/cli --pack ."
+    "attw": "npx --yes @arethetypeswrong/cli --pack ."
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
@@ -68,7 +68,7 @@
     "vitest": "^2.1.8"
   },
   "dependencies": {
-    "jsx-middlewares": "^2.1.0"
+    "jsx-middlewares": "^2.1.2"
   },
   "peerDependencies": {
     "@types/react": ">=18",

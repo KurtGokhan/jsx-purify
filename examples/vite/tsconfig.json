@@ -15,8 +15,7 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "jsxImportSource": "jsx-purify/react"
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["src", "**/*.d.ts"],
   "references": [

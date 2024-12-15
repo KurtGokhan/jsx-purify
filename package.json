@@ -1,6 +1,6 @@
 {
   "name": "jsx-purify",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "type": "commonjs",
   "private": true,
   "description": "Transform untrusted JSX to a safe JSX",
